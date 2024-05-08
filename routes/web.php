@@ -18,6 +18,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::middleware(['auth'])
+    ->prefix('admin')
+    ->group(function (){
+        Route::get('/users', ['UserController@index'])->name('users.index');
+
+    });
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
