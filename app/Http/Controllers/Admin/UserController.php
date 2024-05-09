@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enum\Status;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreUpdateUserRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -12,7 +15,9 @@ class UserController extends Controller
      */
     public function index()
     {
-       return view('admin.users.index');
+        $users = User::paginate(5);
+
+        return view('admin.users.index', compact('users'));
     }
 
     /**
@@ -42,17 +47,23 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(User $user)
     {
-        //
+        $status = Status::all();
+        return view('admin.users.edit', compact('user', 'status'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreUpdateUserRequest $request, User $user)
     {
-        //
+
+            $user->update($request->validated());
+
+            return redirect()
+            ->route('users.index')
+            ->with('message', 'Registro alterado com sucesso');
     }
 
     /**

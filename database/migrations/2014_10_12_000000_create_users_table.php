@@ -1,5 +1,7 @@
 <?php
 
+use App\Enum\State;
+use App\Enum\Status;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,6 +17,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string('name');
             $table->string('email')->unique();
+            $table->enum('status', Status::all())->default(Status::ACTIVE);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

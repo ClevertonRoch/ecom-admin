@@ -6,7 +6,7 @@ class Status {
     const ACTIVE = 'ativo';
     const INACTIVE = 'inativo';
 
-    public function all(){
+    public static function all() {
         return [
             self::ACTIVE,
             self::INACTIVE,
